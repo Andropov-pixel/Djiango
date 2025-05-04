@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STALKER Магазин - Зона Отчуждения</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --dark: #1A1A1A;
+            --light: #f8f9fa;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --zone-yellow: #FFD700;
+            --zone-red: #8B0000;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #121212;
+            color: #E0E0E0;
+            background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        header {
+            background-color: rgba(26, 26, 26, 0.9);
+            padding: 15px 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--zone-yellow);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--zone-yellow);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--zone-yellow);
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            border-right: 1px solid #333;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar nav ul li a {
+            color: #CCC;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--zone-yellow);
+        }
+
+        .sidebar nav ul li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .profile {
+            margin-top: auto;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--zone-yellow);
+            margin: 0 auto 10px;
+        }
+
+        .profile-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--zone-yellow);
+        }
+
+        .profile-email {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .profile-btn {
+            background-color: var(--primary);
+            color: black;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .profile-btn:hover {
+            background-color: var(--zone-yellow);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background-color: rgba(26, 26, 26, 0.85);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--zone-yellow);
+            margin: 0;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+
+        .intro-text {
+            color: #AAA;
+            margin-bottom: 30px;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: rgba(40, 40, 40, 0.8);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 0, 0, 0.1) 100%);
+            z-index: 0;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            border-color: var(--zone-yellow);
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--zone-yellow);
+        }
+
+        .product-description {
+            color: #AAA;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .buy-btn {
+            background-color: var(--primary);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            flex: 1;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .buy-btn:hover {
+            background-color: var(--zone-yellow);
+        }
+
+        .wishlist-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+            color: #666;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 10px;
+            width: 40px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .wishlist-btn:hover {
+            color: #ff4757;
+            border-color: #ff4757;
+        }
+
+        .artifact-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--zone-red);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        footer {
+            background-color: rgba(26, 26, 26, 0.9);
+            color: #777;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                z-index: 1000;
+                transform: translateX(-100%);
+                width: 280px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">STALKER MARKET</div>
+        <button class="mobile-menu-btn" id="menuBtn">
+            <i class="fas fa-radiation"></i>
+        </button>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-radiation-alt"></i> Зона Отчуждения</a></li>
+                    <li><a href="#"><i class="fas fa-biohazard"></i> Каталог товар питания</a></li>
+                    <li><a href="#"><i class="fas fa-vest"></i> Экипировка</a></li>
+                    <li><a href="#"><i class="fas fa-map-marked-alt"></i> Контакты для связи</a></li>
+                </ul>
+            </nav>
+
+            <div class="profile">
+                <img src="https://avatars.mds.yandex.net/i?id=235b1813e9c24ffbb00812b295b461f3_l-8201030-images-thumbs&n=13" alt="Сталкер" class="profile-img">
+                <div class="profile-name">Сталкер "атлас"</div>
+                <div class="profile-email">Группа: Свобода</div>
+                <button class="profile-btn"><i class="fas fa-id-card"></i> Досье</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Зона Отчуждения</h1>
+            </div>
+
+            <p class="intro-text">Добро пожаловать в официальный магазин сталкеров. Здесь вы найдете все необходимое для выживания в Зоне: артефакты, снаряжение, оружие и информацию. Помни - Зона полна опасностей, но и богатств для тех, кто осмелится их взять.</p>
+
+            <div class="products-grid">
+                <!-- Товар 1 -->
+                <div class="product-card">
+                    <div class="artifact-tag">распространенный</div>
+                    <div class="product-img">
+                        <img src="https://avatars.mds.yandex.net/i?id=9d0a51984bbcd1358dddaa9d7e23aa80_sr-9181242-images-thumbs&n=13" alt="Автомат калашникова модернизированный">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Автомат калашникова Модернизированный </h3>
+                        <p class="product-description">Некоторые характеристики автомата Калашникова (АК):
+
+Калибр: 7,62 мм. 12
+Применяемый патрон: 7,62×39 мм. 12
+Длина: 870 мм, со штыком — 1070 мм. 12
+Длина ствола: 415 мм, нарезная часть — 369 мм. 1
+Ёмкость магазина: 30 патронов. 12
+Вес: без магазина и штыка — 3,8 кг, со снаряжённым магазином — 4,3 кг. 2
+Начальная скорость пули: 715 м/с. 12
+Прицельная дальность: 800 м.</p>
+                        <div class="product-price">15.000 RU</div>
+                        <div class="product-actions">
+                            <button class="buy-btn">В рюкзак</button>
+                            <button class="wishlist-btn" title="Добавить в избранное">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 2 -->
+                <div class="product-card">
+                    <div class="artifact-tag">Опасный</div>
+                    <div class="product-img">
+                        <img src="https://twizz.ru/wp-content/uploads/2022/03/1646832866_444cf18cb66d1b1e1170bf3eaaf9ff2f.jpg" alt="Огненный шар">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Огненный Шар</h3>
+                        <p class="product-description">Формируется в термальных аномалиях. Повышает устойчивость к радиации, но требует специального контейнера.</p>
+                        <div class="product-price">67.000 RU</div>
+                        <div class="product-actions">
+                            <button class="buy-btn">В рюкзак</button>
+                            <button class="wishlist-btn" title="Добавить в избранное">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 3 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://avatars.mds.yandex.net/i?id=b56e7258c440aa05249e10286c6c97b9_l-4079997-images-thumbs&n=13" alt="Глаз">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Рюкзак походный армейский</h3>
+                        <p class="product-description">Модели рюкзаков для продолжительных походов с большим грузом – Tatonka Bison 75+10,
+                            Tatonka Bison 90+10, Tatonka Bison 120+15. Система подвески спины этих рюкзаков X1 разработана специально для длительного комфортного передвижения даже с очень большим весом.
+                            Рюкзак Tatonka Bison 65+10 W – уникальная модель, разработанная специально для женщин с учетом женской анатомии.</p>
+                        <div class="product-price">24.000 RU</div>
+                        <div class="product-actions">
+                            <button class="buy-btn">В рюкзак</button>
+                            <button class="wishlist-btn" title="Добавить в избранное">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 4 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://sun9-64.userapi.com/impg/czyB-I1ZJ_L-uo4CV49O3B7BNtg9Ib47rhOFFQ/PF-Tyjm7Rik.jpg?size=403x604&quality=95&sign=35730e791a5f57b38cfff50be0233abb&c_uniq_tag=sOy1JkVh3cLH0lnc5h0bkNQCHPZ_DH1yrremuIq_dj4&type=album" alt="Защитный костюм">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Костюм "Сева"</h3>
+                        <p class="product-description">Специальный защитный костюм с усиленной защитой от аномалий и радиации. Включает детектор артефактов.</p>
+                        <div class="product-price">75.000 RU</div>
+                        <div class="product-actions">
+                            <button class="buy-btn">В рюкзак</button>
+                            <button class="wishlist-btn" title="Добавить в избранное">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 5 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://avatars.dzeninfra.ru/get-zen_doc/2480061/pub_61577324231e6d74dfda952c_6157793da5fcae178ee60dc0/scale_1200" alt="Аптечка">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Армейская аптечка</h3>
+                        <p class="product-description">Противобактериальное средство № 2 (сульфадиметоксин 0,2 г.) — 1 удлинённый пенал без окраски на 15 таблеток;
+Радиозащитное средство № 2 (калия йодид 0,125 г.) — 1 пенал белого цвета на 10 таблеток;
+Противорвотное средство (этаперазин 0,006 г.) — 1 пенал голубого цвета на 5 таблеток;
+Противобактериальное средство № 1 (хлортетрациклин 0,006 г.) — 2 пенала без окраски с квадратными корпусами на 5 таблеток каждый;
+Радиозащитное средство № 1 (цистамин 0,2 г.) — 2 пенала малинового цвета на 6 таблеток каждый.
+Раньше в состав входил препарат тарен, содержащий вещество апрофен — противоядие от ФОС.
+
+В аптечках, находящихся на оснащении сотрудников государственных структур, дополнительно находились 2 шприц-тюбика:
+
+Белый шприц-тюбик содержал промедол, наркотический опиоидный анальгетик;
+Красный шприц-тюбик содержал афин — антидот, применяемый в случае поражения фосфороорганическими отравляющими веществами.</p>
+                        <div class="product-price">3.500 RU</div>
+                        <div class="product-actions">
+                            <button class="buy-btn">В рюкзак</button>
+                            <button class="wishlist-btn" title="Добавить в избранное">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 6 -->
+                <div class="product-card">
+                    <div class="artifact-tag">Новый</div>
+                    <div class="product-img">
+                        <img src="https://avatars.mds.yandex.net/i?id=79c3ec795d59c14be3319ac1a75775dc_l-5229051-images-thumbs&n=13" alt="Детектор">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Детектор "Велес"</h3>
+                        <p class="product-description">Улучшенная модель детектора артефактов с увеличенным радиусом действия и защитой от помех.</p>
+                        <div class="product-price">32.000 RU</div>
+                        <div class="product-actions">
+                            <button class="buy-btn">В рюкзак</button>
+                            <button class="wishlist-btn" title="Добавить в избранное">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        © 2025 STALKER MARKET. Все товары добыты в Зоне Отчуждения. Несанкционированное проникновение запрещено.
+    </footer>
+
+    <script>
+        // Мобильное меню
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Имитация добавления в избранное
+        const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+
+        wishlistBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#ff4757';
+                    this.setAttribute('title', 'Удалить из избранного');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                    this.setAttribute('title', 'Добавить в избранное');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
