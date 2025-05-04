@@ -2,13 +2,18 @@ from flask import Flask, send_file
 
 app = Flask(__name__)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve_contacts(path):
-    # Возвращаем файл 'contacts.html' на любой запрос
+#Главный маршрут (/)
+@app.route("/")
+#def index():
+    #return send_file('index.html')
+
+
+# Страница "Контакты"
+@app.route("/contacts")
+def contacts():
     return send_file('contacts.html')
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
 
-    # 1 попытка
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=5000)
