@@ -1,19 +1,16 @@
-from flask import Flask, send_file
+from http.server import SimpleHTTPRequestHandler, HTTPServer
 
-app = Flask(__name__)
-
-#Главный маршрут (/)
-@app.route("/")
-#def index():
-    #return send_file('index.html')
-
-
-# Страница "Контакты"
-@app.route("/contacts")
-def contacts():
-    return send_file('contacts.html')
-
-
+class MyHandler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/':
+            self.path = 'index.html'  # Главная страница
+        elif self.path == '/contacts':
+            self.path = 'contacts.html'  # Страница контактов
+        return super().do_GET()
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    host = '0.0.0.0'
+    port = 5000
+    server = HTTPServer((host, port), MyHandler)
+    print(f"Сервер запущен на http://{host}:{port}")
+    server.serve_forever()
