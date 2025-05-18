@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STALKER Магазин - Зона Отчуждения</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -17,10 +20,6 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
             min-height: 100vh;
             background-color: #121212;
             color: #E0E0E0;
@@ -28,6 +27,8 @@
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
+            display: flex;
+            flex-direction: column;
         }
 
         body::before {
@@ -41,16 +42,6 @@
             z-index: -1;
         }
 
-        header {
-            background-color: rgba(26, 26, 26, 0.9);
-            padding: 15px 25px;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--zone-yellow);
-        }
-
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
@@ -59,18 +50,10 @@
             font-family: 'Courier New', monospace;
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--zone-yellow);
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
+        .navbar {
+            background-color: rgba(26, 26, 26, 0.9) !important;
+            border-bottom: 2px solid var(--zone-yellow);
+            padding: 15px 25px;
         }
 
         .sidebar {
@@ -82,45 +65,40 @@
             flex-direction: column;
             transition: transform 0.3s ease;
             border-right: 1px solid #333;
+            height: calc(100vh - 72px);
+            position: fixed;
         }
 
-        .sidebar nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .sidebar-nav {
+            flex-grow: 1;
         }
 
-        .sidebar nav ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar nav ul li a {
+        .sidebar-nav .nav-link {
             color: #CCC;
-            text-decoration: none;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
             font-size: 1.1rem;
             display: flex;
             align-items: center;
-            padding: 10px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
         }
 
-        .sidebar nav ul li a:hover {
+        .sidebar-nav .nav-link:hover {
             background-color: rgba(76, 175, 80, 0.2);
             color: var(--zone-yellow);
         }
 
-        .sidebar nav ul li a i {
+        .sidebar-nav .nav-link i {
             margin-right: 10px;
             width: 20px;
             text-align: center;
         }
 
         .profile {
-            margin-top: auto;
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid #333;
+            margin-top: auto;
         }
 
         .profile-img {
@@ -150,10 +128,8 @@
             border: none;
             padding: 8px 15px;
             border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .profile-btn:hover {
@@ -161,40 +137,27 @@
         }
 
         .main-content {
-            flex: 1;
-            padding: 30px;
+            margin-left: 280px;
+            flex-grow: 1;
             background-color: rgba(26, 26, 26, 0.85);
-        }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
+            min-height: calc(100vh - 72px);
+            padding: 30px;
         }
 
         .page-title {
             font-size: 2.2rem;
             font-weight: 600;
             color: var(--zone-yellow);
-            margin: 0;
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
             font-family: 'Courier New', monospace;
+            margin: 0;
         }
 
         .intro-text {
             color: #AAA;
-            margin-bottom: 30px;
             max-width: 800px;
+            margin-bottom: 30px;
             line-height: 1.6;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
         }
 
         .product-card {
@@ -205,6 +168,7 @@
             transition: all 0.3s;
             border: 1px solid #333;
             position: relative;
+            height: 100%;
         }
 
         .product-card::before {
@@ -241,24 +205,18 @@
             transform: scale(1.05);
         }
 
-        .product-info {
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
         .product-title {
             font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 10px;
             color: var(--zone-yellow);
+            margin-bottom: 10px;
         }
 
         .product-description {
             color: #AAA;
             font-size: 0.9rem;
-            margin-bottom: 15px;
             line-height: 1.5;
+            margin-bottom: 15px;
         }
 
         .product-price {
@@ -268,23 +226,16 @@
             margin-bottom: 15px;
         }
 
-        .product-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-
         .buy-btn {
             background-color: var(--primary);
             color: black;
             border: none;
+            font-weight: bold;
+            text-transform: uppercase;
             padding: 10px 20px;
             border-radius: 3px;
-            cursor: pointer;
-            font-weight: bold;
-            flex: 1;
-            transition: all 0.3s;
-            text-transform: uppercase;
             font-size: 0.9rem;
+            flex: 1;
         }
 
         .buy-btn:hover {
@@ -295,12 +246,10 @@
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid #444;
             color: #666;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin-left: 10px;
             width: 40px;
             border-radius: 3px;
-            transition: all 0.3s;
+            font-size: 1.2rem;
+            margin-left: 10px;
         }
 
         .wishlist-btn:hover {
@@ -324,185 +273,194 @@
         footer {
             background-color: rgba(26, 26, 26, 0.9);
             color: #777;
+            border-top: 1px solid #333;
             text-align: center;
             padding: 20px;
             font-size: 0.9rem;
-            border-top: 1px solid #333;
         }
 
+        /* Мобильные стили */
         @media (max-width: 992px) {
             .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                z-index: 1000;
                 transform: translateX(-100%);
-                width: 280px;
+                z-index: 1000;
+                height: 100vh;
+                top: 0;
             }
 
             .sidebar.active {
                 transform: translateX(0);
             }
 
-            .mobile-menu-btn {
-                display: block;
-            }
-
             .main-content {
                 margin-left: 0;
-                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">STALKER MARKET</div>
-        <button class="mobile-menu-btn" id="menuBtn">
-            <i class="fas fa-radiation"></i>
-        </button>
-    </header>
+    <!-- Навигационная панель -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand logo" href="#">STALKER MARKET</a>
+            <button class="navbar-toggler d-lg-none" type="button" id="menuBtn">
+                <i class="fas fa-radiation"></i>
+            </button>
+        </div>
+    </nav>
 
-    <div class="container">
+    <div class="d-flex">
+        <!-- Боковая панель -->
         <aside class="sidebar" id="sidebar">
-            <nav>
-                <ul>
-                    <li><a href="#"><i class="fas fa-radiation-alt"></i> Зона Отчуждения</a></li>
-                    <li><a href="#"><i class="fas fa-biohazard"></i> Каталог товар питания </a></li>
-                    <li><a href="#"><i class="fas fa-vest"></i> Экипировка</a></li>
-                    <li><a href="#"><i class="fas fa-map-marked-alt"></i> Контакты для связи</a></li>
+            <div class="sidebar-nav">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-radiation-alt"></i> Зона Отчуждения</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-biohazard"></i> Каталог товаров</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-vest"></i> Экипировка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-map-marked-alt"></i> Контакты для связи</a>
+                    </li>
                 </ul>
-            </nav>
+            </div>
 
             <div class="profile">
                 <img src="https://avatars.mds.yandex.net/i?id=235b1813e9c24ffbb00812b295b461f3_l-8201030-images-thumbs&n=13" alt="Сталкер" class="profile-img">
-                <div class="profile-name">Сталкер "атлас"</div>
+                <div class="profile-name">Сталкер "Атлас"</div>
                 <div class="profile-email">Группа: Свобода</div>
                 <button class="profile-btn"><i class="fas fa-id-card"></i> Досье</button>
             </div>
         </aside>
 
+        <!-- Основное содержимое -->
         <main class="main-content">
-            <div class="page-header">
-                <h1 class="page-title">Каталог экипировки для сталкеров </h1>
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+                <h1 class="page-title">Каталог экипировки для сталкеров</h1>
             </div>
 
             <p class="intro-text">Добро пожаловать в официальный магазин сталкеров. Здесь вы найдете все необходимое для выживания в Зоне: артефакты, снаряжение, оружие и информацию. Помни - Зона полна опасностей, но и богатств для тех, кто осмелится их взять.</p>
 
-            <div class="products-grid">
-<div class="product-card">
-    <div class="artifact-tag">Местное производство</div>
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=1ab74bbbd3655b2a6bea06c6411c98c8_l-10137006-images-thumbs&n=13" alt="Армейский">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">Комбинезон заря</h3>
-        <p class="product-description">Производимый «народными умельцами» комбинезон сталкера представляет собой эффективное сочетание лёгкого армейского бронежилета и комбинезона из прорезиненной ткани.
-            Усилен за счёт встроенных кевларовых пластин. Неплохо защищает от слабого стрелкового оружия.
-            В целом крайне недостаточен для глубоких рейдов и серьёзных операций в узлах Зоны.</p>
-        <div class="product-price">25.500 RU</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
-</div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                <!-- Продукт 1 -->
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="artifact-tag">Местное производство</div>
+                        <div class="product-img">
+                            <img src="https://avatars.mds.yandex.net/i?id=1ab74bbbd3655b2a6bea06c6411c98c8_l-10137006-images-thumbs&n=13" alt="Комбинезон" class="w-100">
+                        </div>
+                        <div class="product-info p-3">
+                            <h3 class="product-title">Комбинезон заря</h3>
+                            <p class="product-description">Производимый «народными умельцами» комбинезон сталкера представляет собой эффективное сочетание лёгкого армейского бронежилета и комбинезона из прорезиненной ткани. Усилен за счёт встроенных кевларовых пластин. Неплохо защищает от слабого стрелкового оружия.</p>
+                            <div class="product-price">25.500 RU</div>
+                            <div class="d-flex">
+                                <button class="buy-btn btn flex-grow-1">В рюкзак</button>
+                                <button class="wishlist-btn btn" title="Добавить в избранное">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Продукт 2 -->
-<div class="product-card">
-    <div class="artifact-tag">Поступивший</div>
-    <div class="product-img">
-        <img src="https://www.kalashnikov.ru/wp-content/uploads/2023/05/AK-12-obraztsa-2023-g..jpg" alt="Тушенка">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">5,45-мм автомат АК-12"</h3>
-        <p class="product-description">Технические характеристики
-Калибр: 5,45 мм.
-Используемый патрон: 5,45×39.
-Начальная скорость пули: 900 м/с.
-Прицельная дальность: 800 м.
-Дальность прямого выстрела: по цели высотой 0,5 м — 440 м, по цели высотой 1,5 м — 625 м.
-Темп стрельбы: 700 выстрелов в минуту.</p>
-        <div class="product-price">20.000 RU</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
-</div>
+                <!-- Продукт 2 -->
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="artifact-tag">Поступивший</div>
+                        <div class="product-img">
+                            <img src="https://www.kalashnikov.ru/wp-content/uploads/2023/05/AK-12-obraztsa-2023-g..jpg" alt="АК-12" class="w-100">
+                        </div>
+                        <div class="product-info p-3">
+                            <h3 class="product-title">5,45-мм автомат АК-12</h3>
+                            <p class="product-description">Технические характеристики: Калибр: 5,45 мм. Используемый патрон: 5,45×39. Начальная скорость пули: 900 м/с. Прицельная дальность: 800 м. Дальность прямого выстрела: по цели высотой 0,5 м — 440 м, по цели высотой 1,5 м — 625 м. Темп стрельбы: 700 выстрелов в минуту.</p>
+                            <div class="product-price">20.000 RU</div>
+                            <div class="d-flex">
+                                <button class="buy-btn btn flex-grow-1">В рюкзак</button>
+                                <button class="wishlist-btn btn" title="Добавить в избранное">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Продукт 3 -->
-<div class="product-card">
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=297fcc30a82b6a02801157116a374723_l-5668624-images-thumbs&n=13" alt="Хлеб">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">Противогаз типа хомяк"</h3>
-        <p class="product-description">Масса противогаза в комплекте без сумки — не более 900 грамм.
-Площадь поля зрения — не менее 60%.
-Сопротивление постоянному воздушному потоку на вдохе при объёмном расходе воздуха 30 дм³/мин — не более 176,4 Па (18 мм вод. ст.).
-Объёмное содержание диоксида углерода во вдыхаемом воздухе — не более 1,0%.
-Коэффициент подсоса под лицевую часть аэрозоля стандартного масляного тумана — не более 0,001%. 1
-Коэффициент проницаемости фильтрующе - поглощающей коробки (ФПК) по аэрозолю стандартного масляного тумана — не более 0,001%.
-Коэффициент проницаемости по парам радиоактивного йода-131 — не более 0,01%.
-Температурный диапазон эксплуатации — от минус 40 до плюс 40 градусов Цельсия.</p>
-        <div class="product-price">10.700 RU</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
-</div>
+                <!-- Продукт 3 -->
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="product-img">
+                            <img src="https://avatars.mds.yandex.net/i?id=297fcc30a82b6a02801157116a374723_l-5668624-images-thumbs&n=13" alt="Противогаз" class="w-100">
+                        </div>
+                        <div class="product-info p-3">
+                            <h3 class="product-title">Противогаз типа хомяк</h3>
+                            <p class="product-description">Масса противогаза в комплекте без сумки — не более 900 грамм. Площадь поля зрения — не менее 60%. Сопротивление постоянному воздушному потоку на вдохе при объёмном расходе воздуха 30 дм³/мин — не более 176,4 Па (18 мм вод. ст.). Объёмное содержание диоксида углерода во вдыхаемом воздухе — не более 1,0%.</p>
+                            <div class="product-price">10.700 RU</div>
+                            <div class="d-flex">
+                                <button class="buy-btn btn flex-grow-1">В рюкзак</button>
+                                <button class="wishlist-btn btn" title="Добавить в избранное">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Продукт 4 -->
-<div class="product-card">
-    <div class="artifact-tag">Новый</div>
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=0faf157b4928a893207722e4f643f922_l-5245865-images-thumbs&n=13" alt="Энергетик">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">Контейнер для артефактов"</h3>
-        <p class="product-description">Характеристики контейнера Внутренняя защита: 50% Эффективность: 100% Вместимость: 3 артефакта.</p>
-        <div class="product-price">7.000 RU</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
-</div>
+                <!-- Продукт 4 -->
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="artifact-tag">Новый</div>
+                        <div class="product-img">
+                            <img src="https://avatars.mds.yandex.net/i?id=0faf157b4928a893207722e4f643f922_l-5245865-images-thumbs&n=13" alt="Контейнер" class="w-100">
+                        </div>
+                        <div class="product-info p-3">
+                            <h3 class="product-title">Контейнер для артефактов</h3>
+                            <p class="product-description">Характеристики контейнера Внутренняя защита: 50% Эффективность: 100% Вместимость: 3 артефакта. Надежная защита ваших находок от аномальных воздействий. Обязательный элемент экипировки для сталкеров, занимающихся поиском артефактов.</p>
+                            <div class="product-price">7.000 RU</div>
+                            <div class="d-flex">
+                                <button class="buy-btn btn flex-grow-1">В рюкзак</button>
+                                <button class="wishlist-btn btn" title="Добавить в избранное">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Продукт 5 -->
-<div class="product-card">
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=5298dd98009ea4948f70afaa065c8fe4_l-9220617-images-thumbs&n=13" alt="Вода">
+                <!-- Продукт 5 -->
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="product-img">
+                            <img src="https://avatars.mds.yandex.net/i?id=5298dd98009ea4948f70afaa065c8fe4_l-9220617-images-thumbs&n=13" alt="ПДА" class="w-100">
+                        </div>
+                        <div class="product-info p-3">
+                            <h3 class="product-title">Вода "ПДА"</h3>
+                            <p class="product-description">ПДА (карманный персональный компьютер, КПК) в игре S.T.A.L.K.E.R. — мобильное устройство, которое носит практически каждый сталкер в Зоне. Функции: просмотр карты, журнал миссий, заметки, информация о местности и аномалиях. Незаменимый помощник в Зоне.</p>
+                            <div class="product-price">6.000 RU</div>
+                            <div class="d-flex">
+                                <button class="buy-btn btn flex-grow-1">В рюкзак</button>
+                                <button class="wishlist-btn btn" title="Добавить в избранное">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-    <div class="product-info">
-        <h3 class="product-title">Вода "ПДА"</h3>
-        <p class="product-description">ПДА (карманный персональный компьютер, КПК) в игре S.T.A.L.K.E.R. —
-            мобильное устройство, которое носит практически каждый сталкер в Зоне. Некоторые функции ПДА:
-Просмотр карты. На ней отображается вся карта Зоны, исследованные области и локации, текущее местоположение, квестовые маркеры, тайники и другие важные объекты. Можно добавлять заметки, например, чтобы не забыть интересное место, которое планируется исследовать позже.
-Просмотр журнала миссий. В нём показаны все активные и завершённые миссии.</p>
-        <div class="product-price">6.000 RU</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
+
+    <!-- Подвал -->
     <footer>
-        © 2025 STALKER MARKET. Все товары добыты в Зоне Отчуждения. Несанкционированное проникновение запрещено.
+        <div class="container">
+            <p class="m-0">© 2025 STALKER MARKET. Все товары добыты в Зоне Отчуждения. Несанкционированное проникновение запрещено.</p>
+        </div>
     </footer>
 
+    <!-- Bootstrap JS и Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Мобильное меню
         const menuBtn = document.getElementById('menuBtn');
@@ -534,5 +492,3 @@
     </script>
 </body>
 </html>
-
-#2 попытка
