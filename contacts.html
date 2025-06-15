@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STALKER Магазин - Зона Отчуждения</title>
+    <title>Контакты | STALKER MARKET</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -17,10 +20,6 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
             min-height: 100vh;
             background-color: #121212;
             color: #E0E0E0;
@@ -28,6 +27,8 @@
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
+            display: flex;
+            flex-direction: column;
         }
 
         body::before {
@@ -41,14 +42,10 @@
             z-index: -1;
         }
 
-        header {
-            background-color: rgba(26, 26, 26, 0.9);
-            padding: 15px 25px;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .navbar {
+            background-color: rgba(26, 26, 26, 0.9) !important;
             border-bottom: 2px solid var(--zone-yellow);
+            padding: 15px 25px;
         }
 
         .logo {
@@ -59,446 +56,159 @@
             font-family: 'Courier New', monospace;
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--zone-yellow);
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-        }
-
-        .sidebar {
-            width: 280px;
-            background-color: rgba(26, 26, 26, 0.9);
-            color: white;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-            border-right: 1px solid #333;
-        }
-
-        .sidebar nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar nav ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar nav ul li a {
-            color: #CCC;
-            text-decoration: none;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar nav ul li a:hover {
-            background-color: rgba(76, 175, 80, 0.2);
-            color: var(--zone-yellow);
-        }
-
-        .sidebar nav ul li a i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .profile {
-            margin-top: auto;
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-        }
-
-        .profile-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--zone-yellow);
-            margin: 0 auto 10px;
-        }
-
-        .profile-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--zone-yellow);
-        }
-
-        .profile-email {
-            font-size: 0.8rem;
-            color: #777;
-            margin-bottom: 15px;
-        }
-
-        .profile-btn {
-            background-color: var(--primary);
-            color: black;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .profile-btn:hover {
-            background-color: var(--zone-yellow);
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 30px;
+        .contacts-container {
             background-color: rgba(26, 26, 26, 0.85);
+            border-radius: 10px;
+            padding: 40px;
+            margin-top: 50px;
+            border: 1px solid var(--zone-yellow);
+            box-shadow: var(--shadow);
+            max-width: 800px;
         }
 
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .contacts-title {
+            color: var(--zone-yellow);
+            font-size: 2.5rem;
             margin-bottom: 30px;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            font-family: 'Courier New', monospace;
             border-bottom: 1px solid #333;
             padding-bottom: 15px;
         }
 
-        .page-title {
-            font-size: 2.2rem;
-            font-weight: 600;
+        .contacts-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contacts-list li {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .contacts-list i {
             color: var(--zone-yellow);
-            margin: 0;
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
-            font-family: 'Courier New', monospace;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            width: 30px;
+            text-align: center;
         }
 
-        .intro-text {
-            color: #AAA;
-            margin-bottom: 30px;
-            max-width: 800px;
-            line-height: 1.6;
+        .contacts-list a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
         }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+        .contacts-list a:hover {
+            color: var(--zone-yellow);
+            text-decoration: underline;
         }
 
-        .product-card {
-            background-color: rgba(40, 40, 40, 0.8);
+        .map-container {
+            margin-top: 40px;
+            border: 1px solid #333;
             border-radius: 5px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
-            border: 1px solid #333;
-            position: relative;
-        }
-
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 0, 0, 0.1) 100%);
-            z-index: 0;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            border-color: var(--zone-yellow);
-        }
-
-        .product-img {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .product-card:hover .product-img img {
-            transform: scale(1.05);
-        }
-
-        .product-info {
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .product-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--zone-yellow);
-        }
-
-        .product-description {
-            color: #AAA;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .product-price {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .product-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .buy-btn {
-            background-color: var(--primary);
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-weight: bold;
-            flex: 1;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        .buy-btn:hover {
-            background-color: var(--zone-yellow);
-        }
-
-        .wishlist-btn {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #444;
-            color: #666;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin-left: 10px;
-            width: 40px;
-            border-radius: 3px;
-            transition: all 0.3s;
-        }
-
-        .wishlist-btn:hover {
-            color: #ff4757;
-            border-color: #ff4757;
-        }
-
-        .artifact-tag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: var(--zone-red);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 2;
         }
 
         footer {
             background-color: rgba(26, 26, 26, 0.9);
             color: #777;
+            border-top: 1px solid #333;
             text-align: center;
             padding: 20px;
             font-size: 0.9rem;
-            border-top: 1px solid #333;
+            margin-top: auto;
         }
 
-        @media (max-width: 992px) {
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                z-index: 1000;
-                transform: translateX(-100%);
-                width: 280px;
+        @media (max-width: 768px) {
+            .contacts-container {
+                padding: 20px;
+                margin-top: 20px;
             }
 
-            .sidebar.active {
-                transform: translateX(0);
+            .contacts-title {
+                font-size: 2rem;
             }
 
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
+            .contacts-list li {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">STALKER MARKET</div>
-        <button class="mobile-menu-btn" id="menuBtn">
-            <i class="fas fa-radiation"></i>
-        </button>
-    </header>
-
-    <div class="container">
-        <aside class="sidebar" id="sidebar">
-            <nav>
-                <ul>
-                    <li><a href="#"><i class="fas fa-radiation-alt"></i> Зона Отчуждения</a></li>
-                    <li><a href="#"><i class="fas fa-biohazard"></i> Каталог товар питания </a></li>
-                    <li><a href="#"><i class="fas fa-vest"></i> Экипировка</a></li>
-                    <li><a href="#"><i class="fas fa-map-marked-alt"></i> Контакты для связи</a></li>
+    <!-- Навигационная панель -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand logo" href="#">STALKER MARKET</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-radiation"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-home"></i> Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-store"></i> Магазин</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-map-marked-alt"></i> Контакты</a>
+                    </li>
                 </ul>
-            </nav>
-
-            <div class="profile">
-                <img src="https://avatars.mds.yandex.net/i?id=235b1813e9c24ffbb00812b295b461f3_l-8201030-images-thumbs&n=13" alt="Сталкер" class="profile-img">
-                <div class="profile-name">Сталкер "атлас"</div>
-                <div class="profile-email">Группа: Свобода</div>
-                <button class="profile-btn"><i class="fas fa-id-card"></i> Досье</button>
             </div>
-        </aside>
+        </div>
+    </nav>
 
-        <main class="main-content">
-            <div class="page-header">
-                <h1 class="page-title">Контакты </h1>
+    <!-- Основное содержимое -->
+    <main class="container py-4">
+        <div class="contacts-container mx-auto">
+            <h1 class="contacts-title text-center">
+                <i class="fas fa-map-marker-alt"></i> Контакты
+            </h1>
+
+            <ul class="contacts-list">
+                <li>
+                    <i class="fas fa-phone"></i>
+                    Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    Email: <a href="mailto:contact@stalkermarket.ru">contact@stalkermarket.ru</a>
+                </li>
+                <li>
+                    <i class="fas fa-compass"></i>
+                    Адрес: Зона Отчуждения, База "Свобода", Склад №3
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    Часы работы: ежедневно с 8:00 до 20:00 (по зонному времени)
+                </li>
+            </ul>
+
+            <div class="map-container">
+                <!-- Здесь можно вставить карту -->
+                <img src="https://maps.googleapis.com/maps/api/staticmap?center=50.4501,30.5234&zoom=12&size=800x400&maptype=roadmap&markers=color:red%7C50.4501,30.5234&key=YOUR_API_KEY"
+                     alt="Карта расположения" class="img-fluid">
+                <div class="text-center mt-2 text-muted">
+                    <small>Карта приблизительного расположения базы</small>
+                </div>
             </div>
-
-            <p class="intro-text">Добро пожаловать в официальный магазин сталкеров. Здесь вы найдете все необходимое для выживания в Зоне: артефакты, снаряжение, оружие и информацию. Помни - Зона полна опасностей, но и богатств для тех, кто осмелится их взять.</p>
-
-            <div class="products-grid">
-<div class="product-card">
-    <div class="artifact-tag">Проводник</div>
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=d685d52d1dc3c5b094397422b03aec01_l-4012465-images-thumbs&n=13" alt="Армейский">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">Проводник Бес</h3>
-        <p class="product-description">Этот сталкер поможет вам попасть куда угодно за умеренную плату. Контакты 8-900-222-44-12. номер ПДА 129022.</p>
-        <div class="product-price">13.500 RU</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
         </div>
-    </div>
-</div>
+    </main>
 
-<!-- Продукт 2 -->
-<div class="product-card">
-    <div class="artifact-tag">Ученый</div>
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=c0ee5f79c09b5ec3993f966f81579384_l-12480039-images-thumbs&n=13" alt="Тушенка">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">Ученый кобольт"</h3>
-        <p class="product-description">Этот человек интерисуется всем что появляеться в зоне. Готов купить или продать все что нужно для достижения цели своих исследований. Контакты 8-800-232-00-78. номер ПДА 112081.</p>
-        <div class="product-price">Цена зависит от услуг или товаров.</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Продукт 3 -->
-<div class="product-card">
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=de06ab876ab2eae47032940247c38d19_l-3084551-images-thumbs&n=13" alt="Хлеб">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">Торговцы</h3>
-        <p class="product-description">Эти уважаемые люди торгуют всем что представляет ценность. Контакты 8-917-432-00-18. номер ПДА 192084</p>
-        <div class="product-price">Деньги взамен на информацию или товар</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Продукт 4 -->
-<div class="product-card">
-    <div class="artifact-tag">Новый</div>
-    <div class="product-img">
-        <img src="https://avatars.mds.yandex.net/i?id=66b5024771df48be04f232e910a92c10_l-5886828-images-thumbs&n=13" alt="Энергетик">
-    </div>
-    <div class="product-info">
-        <h3 class="product-title">Наемники</h3>
-        <p class="product-description">Если вам кто-то мешает это ваш вариант. Контакты для связи Контакты 8-900-000-24-20. номер ПДА 122784 </p>
-        <div class="product-price">Договорная</div>
-        <div class="product-actions">
-            <button class="buy-btn">В рюкзак</button>
-            <button class="wishlist-btn" title="Добавить в избранное">
-                <i class="far fa-heart"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
+    <!-- Подвал -->
     <footer>
-        © 2025 STALKER MARKET. Все товары добыты в Зоне Отчуждения. Несанкционированное проникновение запрещено.
+        <div class="container">
+            <p class="m-0">© 2025 STALKER MARKET. Все товары добыты в Зоне Отчуждения. Несанкционированное проникновение запрещено.</p>
+        </div>
     </footer>
 
-    <script>
-        // Мобильное меню
-        const menuBtn = document.getElementById('menuBtn');
-        const sidebar = document.getElementById('sidebar');
-
-        menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-
-        // Имитация добавления в избранное
-        const wishlistBtns = document.querySelectorAll('.wishlist-btn');
-
-        wishlistBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    icon.style.color = '#ff4757';
-                    this.setAttribute('title', 'Удалить из избранного');
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    icon.style.color = '';
-                    this.setAttribute('title', 'Добавить в избранное');
-                }
-            });
-        });
-    </script>
+    <!-- Bootstrap JS и Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-#1 попытка

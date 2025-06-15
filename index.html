@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STALKER Магазин - Зона Отчуждения</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
             --primary: #4CAF50;
@@ -17,10 +20,6 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
             min-height: 100vh;
             background-color: #121212;
             color: #E0E0E0;
@@ -28,6 +27,8 @@
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
+            display: flex;
+            flex-direction: column;
         }
 
         body::before {
@@ -41,13 +42,8 @@
             z-index: -1;
         }
 
-        header {
-            background-color: rgba(26, 26, 26, 0.9);
-            padding: 15px 25px;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .navbar {
+            background-color: rgba(26, 26, 26, 0.9) !important;
             border-bottom: 2px solid var(--zone-yellow);
         }
 
@@ -59,65 +55,33 @@
             font-family: 'Courier New', monospace;
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--zone-yellow);
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-        }
-
         .sidebar {
             width: 280px;
             background-color: rgba(26, 26, 26, 0.9);
             color: white;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
             transition: transform 0.3s ease;
             border-right: 1px solid #333;
         }
 
-        .sidebar nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar nav ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar nav ul li a {
+        .sidebar .nav-link {
             color: #CCC;
-            text-decoration: none;
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            padding: 10px;
             border-radius: 5px;
-            transition: all 0.3s ease;
+            margin-bottom: 5px;
         }
 
-        .sidebar nav ul li a:hover {
+        .sidebar .nav-link:hover {
             background-color: rgba(76, 175, 80, 0.2);
             color: var(--zone-yellow);
         }
 
-        .sidebar nav ul li a i {
-            margin-right: 10px;
+        .sidebar .nav-link i {
             width: 20px;
             text-align: center;
+            margin-right: 10px;
         }
 
         .profile {
-            margin-top: auto;
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid #333;
@@ -147,12 +111,6 @@
         .profile-btn {
             background-color: var(--primary);
             color: black;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
             font-weight: bold;
         }
 
@@ -161,40 +119,21 @@
         }
 
         .main-content {
-            flex: 1;
-            padding: 30px;
             background-color: rgba(26, 26, 26, 0.85);
-        }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
+            flex: 1;
         }
 
         .page-title {
             font-size: 2.2rem;
             font-weight: 600;
             color: var(--zone-yellow);
-            margin: 0;
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
             font-family: 'Courier New', monospace;
         }
 
         .intro-text {
             color: #AAA;
-            margin-bottom: 30px;
             max-width: 800px;
-            line-height: 1.6;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
         }
 
         .product-card {
@@ -205,6 +144,9 @@
             transition: all 0.3s;
             border: 1px solid #333;
             position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card::before {
@@ -245,6 +187,9 @@
             padding: 20px;
             position: relative;
             z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-title {
@@ -258,7 +203,7 @@
             color: #AAA;
             font-size: 0.9rem;
             margin-bottom: 15px;
-            line-height: 1.5;
+            flex: 1;
         }
 
         .product-price {
@@ -268,23 +213,11 @@
             margin-bottom: 15px;
         }
 
-        .product-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-
         .buy-btn {
             background-color: var(--primary);
             color: black;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 3px;
-            cursor: pointer;
             font-weight: bold;
-            flex: 1;
-            transition: all 0.3s;
             text-transform: uppercase;
-            font-size: 0.9rem;
         }
 
         .buy-btn:hover {
@@ -295,12 +228,7 @@
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid #444;
             color: #666;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin-left: 10px;
             width: 40px;
-            border-radius: 3px;
-            transition: all 0.3s;
         }
 
         .wishlist-btn:hover {
@@ -324,9 +252,6 @@
         footer {
             background-color: rgba(26, 26, 26, 0.9);
             color: #777;
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
             border-top: 1px solid #333;
         }
 
@@ -345,10 +270,6 @@
                 transform: translateX(0);
             }
 
-            .mobile-menu-btn {
-                display: block;
-            }
-
             .main-content {
                 margin-left: 0;
                 width: 100%;
@@ -356,51 +277,51 @@
         }
     </style>
 </head>
-<body>
-    <header>
-        <div class="logo">STALKER MARKET</div>
-        <button class="mobile-menu-btn" id="menuBtn">
-            <i class="fas fa-radiation"></i>
-        </button>
-    </header>
+<body class="d-flex flex-column">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <span class="logo">STALKER MARKET</span>
+            <button class="navbar-toggler" type="button" id="menuBtn">
+                <i class="bi bi-radiation"></i>
+            </button>
+        </div>
+    </nav>
 
-    <div class="container">
-        <aside class="sidebar" id="sidebar">
-            <nav>
-                <ul>
-                    <li><a href="#"><i class="fas fa-radiation-alt"></i> Зона Отчуждения</a></li>
-                    <li><a href="#"><i class="fas fa-biohazard"></i> Каталог товар питания</a></li>
-                    <li><a href="#"><i class="fas fa-vest"></i> Экипировка</a></li>
-                    <li><a href="#"><i class="fas fa-map-marked-alt"></i> Контакты для связи</a></li>
-                </ul>
+    <div class="container-fluid flex-grow-1 d-flex">
+        <aside class="sidebar flex-shrink-0 p-3" id="sidebar">
+            <nav class="nav flex-column">
+                <a class="nav-link" href="#"><i class="bi bi-radiation"></i> Зона Отчуждения</a>
+                <a class="nav-link" href="#"><i class="bi bi-biohazard"></i> Каталог товар питания</a>
+                <a class="nav-link" href="#"><i class="bi bi-shield-shaded"></i> Экипировка</a>
+                <a class="nav-link" href="#"><i class="bi bi-map"></i> Контакты для связи</a>
             </nav>
 
-            <div class="profile">
+            <div class="profile mt-auto">
                 <img src="https://avatars.mds.yandex.net/i?id=235b1813e9c24ffbb00812b295b461f3_l-8201030-images-thumbs&n=13" alt="Сталкер" class="profile-img">
                 <div class="profile-name">Сталкер "атлас"</div>
                 <div class="profile-email">Группа: Свобода</div>
-                <button class="profile-btn"><i class="fas fa-id-card"></i> Досье</button>
+                <button class="btn profile-btn w-100"><i class="bi bi-file-person"></i> Досье</button>
             </div>
         </aside>
 
-        <main class="main-content">
-            <div class="page-header">
-                <h1 class="page-title">Зона Отчуждения</h1>
+        <main class="main-content p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+                <h1 class="page-title m-0">Зона Отчуждения</h1>
             </div>
 
-            <p class="intro-text">Добро пожаловать в официальный магазин сталкеров. Здесь вы найдете все необходимое для выживания в Зоне: артефакты, снаряжение, оружие и информацию. Помни - Зона полна опасностей, но и богатств для тех, кто осмелится их взять.</p>
+            <p class="intro-text mb-4">Добро пожаловать в официальный магазин сталкеров. Здесь вы найдете все необходимое для выживания в Зоне: артефакты, снаряжение, оружие и информацию. Помни - Зона полна опасностей, но и богатств для тех, кто осмелится их взять.</p>
 
-            <div class="products-grid">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <!-- Товар 1 -->
-                <div class="product-card">
-                    <div class="artifact-tag">распространенный</div>
-                    <div class="product-img">
-                        <img src="https://avatars.mds.yandex.net/i?id=9d0a51984bbcd1358dddaa9d7e23aa80_sr-9181242-images-thumbs&n=13" alt="Автомат калашникова модернизированный">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Автомат калашникова Модернизированный </h3>
-                        <p class="product-description">Некоторые характеристики автомата Калашникова (АК):
-
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="artifact-tag">распространенный</div>
+                        <div class="product-img">
+                            <img src="https://avatars.mds.yandex.net/i?id=9d0a51984bbcd1358dddaa9d7e23aa80_sr-9181242-images-thumbs&n=13" alt="Автомат калашникова модернизированный">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Автомат калашникова Модернизированный</h3>
+                            <p class="product-description">Некоторые характеристики автомата Калашникова (АК):
 Калибр: 7,62 мм. 12
 Применяемый патрон: 7,62×39 мм. 12
 Длина: 870 мм, со штыком — 1070 мм. 12
@@ -409,116 +330,122 @@
 Вес: без магазина и штыка — 3,8 кг, со снаряжённым магазином — 4,3 кг. 2
 Начальная скорость пули: 715 м/с. 12
 Прицельная дальность: 800 м.</p>
-                        <div class="product-price">15.000 RU</div>
-                        <div class="product-actions">
-                            <button class="buy-btn">В рюкзак</button>
-                            <button class="wishlist-btn" title="Добавить в избранное">
-                                <i class="far fa-heart"></i>
-                            </button>
+                            <div class="product-price">15.000 RU</div>
+                            <div class="d-flex">
+                                <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Товар 2 -->
-                <div class="product-card">
-                    <div class="artifact-tag">Опасный</div>
-                    <div class="product-img">
-                        <img src="https://twizz.ru/wp-content/uploads/2022/03/1646832866_444cf18cb66d1b1e1170bf3eaaf9ff2f.jpg" alt="Огненный шар">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Огненный Шар</h3>
-                        <p class="product-description">Формируется в термальных аномалиях. Повышает устойчивость к радиации, но требует специального контейнера.</p>
-                        <div class="product-price">67.000 RU</div>
-                        <div class="product-actions">
-                            <button class="buy-btn">В рюкзак</button>
-                            <button class="wishlist-btn" title="Добавить в избранное">
-                                <i class="far fa-heart"></i>
-                            </button>
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="artifact-tag">Опасный</div>
+                        <div class="product-img">
+                            <img src="https://twizz.ru/wp-content/uploads/2022/03/1646832866_444cf18cb66d1b1e1170bf3eaaf9ff2f.jpg" alt="Огненный шар">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Огненный Шар</h3>
+                            <p class="product-description">Формируется в термальных аномалиях. Повышает устойчивость к радиации, но требует специального контейнера.</p>
+                            <div class="product-price">67.000 RU</div>
+                            <div class="d-flex">
+                                <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Товар 3 -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://avatars.mds.yandex.net/i?id=b56e7258c440aa05249e10286c6c97b9_l-4079997-images-thumbs&n=13" alt="Глаз">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Рюкзак походный армейский</h3>
-                        <p class="product-description">Модели рюкзаков для продолжительных походов с большим грузом – Tatonka Bison 75+10,
-                            Tatonka Bison 90+10, Tatonka Bison 120+15. Система подвески спины этих рюкзаков X1 разработана специально для длительного комфортного передвижения даже с очень большим весом.
-                            Рюкзак Tatonka Bison 65+10 W – уникальная модель, разработанная специально для женщин с учетом женской анатомии.</p>
-                        <div class="product-price">24.000 RU</div>
-                        <div class="product-actions">
-                            <button class="buy-btn">В рюкзак</button>
-                            <button class="wishlist-btn" title="Добавить в избранное">
-                                <i class="far fa-heart"></i>
-                            </button>
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="product-img">
+                            <img src="https://avatars.mds.yandex.net/i?id=b56e7258c440aa05249e10286c6c97b9_l-4079997-images-thumbs&n=13" alt="Глаз">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Рюкзак походный армейский</h3>
+                            <p class="product-description">Модели рюкзаков для продолжительных походов с большим грузом – Tatonka Bison 75+10,
+                                Tatonka Bison 90+10, Tatonka Bison 120+15. Система подвески спины этих рюкзаков X1 разработана специально для длительного комфортного передвижения даже с очень большим весом.
+                                Рюкзак Tatonka Bison 65+10 W – уникальная модель, разработанная специально для женщин с учетом женской анатомии.</p>
+                            <div class="product-price">24.000 RU</div>
+                            <div class="d-flex">
+                                <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Товар 4 -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://sun9-64.userapi.com/impg/czyB-I1ZJ_L-uo4CV49O3B7BNtg9Ib47rhOFFQ/PF-Tyjm7Rik.jpg?size=403x604&quality=95&sign=35730e791a5f57b38cfff50be0233abb&c_uniq_tag=sOy1JkVh3cLH0lnc5h0bkNQCHPZ_DH1yrremuIq_dj4&type=album" alt="Защитный костюм">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Костюм "Сева"</h3>
-                        <p class="product-description">Специальный защитный костюм с усиленной защитой от аномалий и радиации. Включает детектор артефактов.</p>
-                        <div class="product-price">75.000 RU</div>
-                        <div class="product-actions">
-                            <button class="buy-btn">В рюкзак</button>
-                            <button class="wishlist-btn" title="Добавить в избранное">
-                                <i class="far fa-heart"></i>
-                            </button>
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="product-img">
+                            <img src="https://sun9-64.userapi.com/impg/czyB-I1ZJ_L-uo4CV49O3B7BNtg9Ib47rhOFFQ/PF-Tyjm7Rik.jpg?size=403x604&quality=95&sign=35730e791a5f57b38cfff50be0233abb&c_uniq_tag=sOy1JkVh3cLH0lnc5h0bkNQCHPZ_DH1yrremuIq_dj4&type=album" alt="Защитный костюм">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Костюм "Сева"</h3>
+                            <p class="product-description">Специальный защитный костюм с усиленной защитой от аномалий и радиации. Включает детектор артефактов.</p>
+                            <div class="product-price">75.000 RU</div>
+                            <div class="d-flex">
+                                <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Товар 5 -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://avatars.dzeninfra.ru/get-zen_doc/2480061/pub_61577324231e6d74dfda952c_6157793da5fcae178ee60dc0/scale_1200" alt="Аптечка">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Армейская аптечка</h3>
-                        <p class="product-description">Противобактериальное средство № 2 (сульфадиметоксин 0,2 г.) — 1 удлинённый пенал без окраски на 15 таблеток;
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="product-img">
+                            <img src="https://avatars.dzeninfra.ru/get-zen_doc/2480061/pub_61577324231e6d74dfda952c_6157793da5fcae178ee60dc0/scale_1200" alt="Аптечка">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Армейская аптечка</h3>
+                            <p class="product-description">Противобактериальное средство № 2 (сульфадиметоксин 0,2 г.) — 1 удлинённый пенал без окраски на 15 таблеток;
 Радиозащитное средство № 2 (калия йодид 0,125 г.) — 1 пенал белого цвета на 10 таблеток;
 Противорвотное средство (этаперазин 0,006 г.) — 1 пенал голубого цвета на 5 таблеток;
 Противобактериальное средство № 1 (хлортетрациклин 0,006 г.) — 2 пенала без окраски с квадратными корпусами на 5 таблеток каждый;
 Радиозащитное средство № 1 (цистамин 0,2 г.) — 2 пенала малинового цвета на 6 таблеток каждый.
-Раньше в состав входил препарат тарен, содержащий вещество апрофен — противоядие от ФОС.
-
-В аптечках, находящихся на оснащении сотрудников государственных структур, дополнительно находились 2 шприц-тюбика:
-
-Белый шприц-тюбик содержал промедол, наркотический опиоидный анальгетик;
-Красный шприц-тюбик содержал афин — антидот, применяемый в случае поражения фосфороорганическими отравляющими веществами.</p>
-                        <div class="product-price">3.500 RU</div>
-                        <div class="product-actions">
-                            <button class="buy-btn">В рюкзак</button>
-                            <button class="wishlist-btn" title="Добавить в избранное">
-                                <i class="far fa-heart"></i>
-                            </button>
+Раньше в состав входил препарат тарен, содержащий вещество апрофен — противоядие от ФОС.</p>
+                            <div class="product-price">3.500 RU</div>
+                            <div class="d-flex">
+                                <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Товар 6 -->
-                <div class="product-card">
-                    <div class="artifact-tag">Новый</div>
-                    <div class="product-img">
-                        <img src="https://avatars.mds.yandex.net/i?id=79c3ec795d59c14be3319ac1a75775dc_l-5229051-images-thumbs&n=13" alt="Детектор">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Детектор "Велес"</h3>
-                        <p class="product-description">Улучшенная модель детектора артефактов с увеличенным радиусом действия и защитой от помех.</p>
-                        <div class="product-price">32.000 RU</div>
-                        <div class="product-actions">
-                            <button class="buy-btn">В рюкзак</button>
-                            <button class="wishlist-btn" title="Добавить в избранное">
-                                <i class="far fa-heart"></i>
-                            </button>
+                <div class="col">
+                    <div class="product-card h-100">
+                        <div class="artifact-tag">Новый</div>
+                        <div class="product-img">
+                            <img src="https://avatars.mds.yandex.net/i?id=79c3ec795d59c14be3319ac1a75775dc_l-5229051-images-thumbs&n=13" alt="Детектор">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Детектор "Велес"</h3>
+                            <p class="product-description">Улучшенная модель детектора артефактов с увеличенным радиусом действия и защитой от помех.</p>
+                            <div class="product-price">32.000 RU</div>
+                            <div class="d-flex">
+                                <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -526,10 +453,12 @@
         </main>
     </div>
 
-    <footer>
+    <footer class="py-3 text-center">
         © 2025 STALKER MARKET. Все товары добыты в Зоне Отчуждения. Несанкционированное проникновение запрещено.
     </footer>
 
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Мобильное меню
         const menuBtn = document.getElementById('menuBtn');
@@ -545,14 +474,14 @@
         wishlistBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
+                if (icon.classList.contains('bi-heart')) {
+                    icon.classList.remove('bi-heart');
+                    icon.classList.add('bi-heart-fill');
                     icon.style.color = '#ff4757';
                     this.setAttribute('title', 'Удалить из избранного');
                 } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
+                    icon.classList.remove('bi-heart-fill');
+                    icon.classList.add('bi-heart');
                     icon.style.color = '';
                     this.setAttribute('title', 'Добавить в избранное');
                 }
@@ -561,5 +490,3 @@
     </script>
 </body>
 </html>
-
-#1 попытка

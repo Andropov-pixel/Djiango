@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STALKER Магазин - Зона Отчуждения</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --dark: #1A1A1A;
+            --light: #f8f9fa;
+            --zone-yellow: #FFD700;
+            --zone-red: #8B0000;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            background-color: #121212;
+            color: #E0E0E0;
+            background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .navbar {
+            background-color: rgba(26, 26, 26, 0.9) !important;
+            border-bottom: 2px solid var(--zone-yellow);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--zone-yellow);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .sidebar {
+            background-color: rgba(26, 26, 26, 0.9);
+            color: white;
+            border-right: 1px solid #333;
+        }
+
+        .sidebar .nav-link {
+            color: #CCC;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--zone-yellow);
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .profile {
+            margin-top: auto;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--zone-yellow);
+            margin: 0 auto 10px;
+        }
+
+        .profile-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--zone-yellow);
+        }
+
+        .profile-email {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .main-content {
+            background-color: rgba(26, 26, 26, 0.85);
+            flex: 1;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--zone-yellow);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+
+        .intro-text {
+            color: #AAA;
+            max-width: 800px;
+        }
+
+        .product-card {
+            background-color: rgba(40, 40, 40, 0.8);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            border: 1px solid #333;
+            position: relative;
+            height: 100%;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 0, 0, 0.1) 100%);
+            z-index: 0;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            border-color: var(--zone-yellow);
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--zone-yellow);
+        }
+
+        .product-description {
+            color: #AAA;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .buy-btn {
+            background-color: var(--primary);
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .buy-btn:hover {
+            background-color: var(--zone-yellow);
+        }
+
+        .wishlist-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+            color: #666;
+            width: 40px;
+        }
+
+        .wishlist-btn:hover {
+            color: #ff4757;
+            border-color: #ff4757;
+        }
+
+        .artifact-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--zone-red);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        footer {
+            background-color: rgba(26, 26, 26, 0.9);
+            color: #777;
+            border-top: 1px solid #333;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                z-index: 1000;
+                transform: translateX(-100%);
+                width: 280px;
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand logo" href="#">STALKER MARKET</a>
+            <button class="navbar-toggler d-lg-none" type="button" id="menuBtn">
+                <i class="fas fa-radiation"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container-fluid flex-grow-1">
+        <div class="row h-100">
+            <!-- Sidebar -->
+            <div class="col-lg-2 sidebar p-3" id="sidebar">
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="#"><i class="fas fa-radiation-alt"></i> Зона Отчуждения</a>
+                    <a class="nav-link" href="#"><i class="fas fa-biohazard"></i> Каталог товаров</a>
+                    <a class="nav-link" href="#"><i class="fas fa-vest"></i> Экипировка</a>
+                    <a class="nav-link" href="#"><i class="fas fa-map-marked-alt"></i> Контакты</a>
+                </nav>
+
+                <div class="profile mt-auto">
+                    <img src="https://avatars.mds.yandex.net/i?id=235b1813e9c24ffbb00812b295b461f3_l-8201030-images-thumbs&n=13" alt="Сталкер" class="profile-img">
+                    <div class="profile-name">Сталкер "Атлас"</div>
+                    <div class="profile-email">Группа: Свобода</div>
+                    <button class="btn btn-success profile-btn"><i class="fas fa-id-card"></i> Досье</button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-lg-10 main-content p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+                    <h1 class="page-title m-0">Каталог продуктов для посетителей зоны отчуждения</h1>
+                </div>
+
+                <p class="intro-text mb-4">Добро пожаловать в официальный магазин сталкеров. Здесь вы найдете все необходимое для выживания в Зоне: артефакты, снаряжение, оружие и информацию. Помни - Зона полна опасностей, но и богатств для тех, кто осмелится их взять.</p>
+
+                <div class="row g-4">
+                    <!-- Product 1 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="product-card h-100">
+                            <div class="artifact-tag">Армейский</div>
+                            <div class="product-img">
+                                <img src="https://kg-rostov.ru/upload/iblock/c1a/c1a86aeb1338fc2275de1219085f03e2.jpg" alt="Армейский ИРП" class="img-fluid">
+                            </div>
+                            <div class="product-info p-3">
+                                <h3 class="product-title">ИРП-24 (Индивидуальный Рацион Питания)</h3>
+                                <p class="product-description">Полноценный суточный рацион военного образца. Включает консервы, сухари, концентраты, чай, сахар и витамины. Не требует приготовления. Срок хранения - 5 лет.</p>
+                                <div class="product-price mb-3">1.200 RU</div>
+                                <div class="d-flex">
+                                    <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                    <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="product-card h-100">
+                            <div class="artifact-tag">Зоновский</div>
+                            <div class="product-img">
+                                <img src="https://avatars.mds.yandex.net/i?id=f2dfaf9364b5b7598c2a90f7bbfc242d_l-5299366-images-thumbs&n=13" alt="Тушенка" class="img-fluid">
+                            </div>
+                            <div class="product-info p-3">
+                                <h3 class="product-title">Тушенка "Зона"</h3>
+                                <p class="product-description">Говяжья тушенка производства Чернобыльского мясокомбината. Несмотря на происхождение, радиационный фон в норме. Высокая калорийность, настоящий деликатес в Зоне.</p>
+                                <div class="product-price mb-3">800 RU</div>
+                                <div class="d-flex">
+                                    <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                    <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="product-card h-100">
+                            <div class="product-img">
+                                <img src="https://avatars.mds.yandex.net/i?id=1a49c0a3d1a0af2ad5bdcce1cfa78181_l-5249892-images-thumbs&n=13" alt="Хлеб" class="img-fluid">
+                            </div>
+                            <div class="product-info p-3">
+                                <h3 class="product-title">Хлеб "Сталкер"</h3>
+                                <p class="product-description">Черный хлеб особой выпечки с повышенной калорийностью. Не плесневеет до 2 недель. Производится на подпольной пекарне в Кордоне из муки с добавлением отрубей.</p>
+                                <div class="product-price mb-3">300 RU</div>
+                                <div class="d-flex">
+                                    <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                    <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="product-card h-100">
+                            <div class="artifact-tag">Новый</div>
+                            <div class="product-img">
+                                <img src="https://ixbt.online/gametech/covers/2023/06/15/nova-filepond-WXIIJE.png" alt="Энергетик" class="img-fluid">
+                            </div>
+                            <div class="product-info p-3">
+                                <h3 class="product-title">Энергетик "Аномалия"</h3>
+                                <p class="product-description">Самодельный энергетический напиток на основе кофеина, таурина и глюкозы. Повышает бдительность на 4-6 часов. Побочные эффекты: тремор и повышенная потливость.</p>
+                                <div class="product-price mb-3">500 RU</div>
+                                <div class="d-flex">
+                                    <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                    <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 5 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="product-card h-100">
+                            <div class="product-img">
+                                <img src="https://fivesushibrothers.com/wp-content/uploads/2019/09/Untitled-design-4-1.png" alt="Вода" class="img-fluid">
+                            </div>
+                            <div class="product-info p-3">
+                                <h3 class="product-title">Вода "Чистая Зона"</h3>
+                                <p class="product-description">Очищенная питьевая вода, добытая из артезианских скважин вне зон заражения. Проходит дополнительную фильтрацию. 1,5 литра в прочной пластиковой таре.</p>
+                                <div class="product-price mb-3">400 RU</div>
+                                <div class="d-flex">
+                                    <button class="btn buy-btn flex-grow-1">В рюкзак</button>
+                                    <button class="btn wishlist-btn ms-2" title="Добавить в избранное">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="py-3 text-center">
+        <div class="container">
+            © 2025 STALKER MARKET. Все товары добыты в Зоне Отчуждения. Несанкционированное проникновение запрещено.
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Мобильное меню
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Имитация добавления в избранное
+        const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+
+        wishlistBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#ff4757';
+                    this.setAttribute('title', 'Удалить из избранного');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                    this.setAttribute('title', 'Добавить в избранное');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
